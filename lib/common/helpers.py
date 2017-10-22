@@ -56,6 +56,8 @@ from Crypto.Random import random
 import subprocess
 import fnmatch
 import urllib, urllib2
+from colorama import init, Fore, Back, Style
+
 
 ###############################################################
 #
@@ -651,29 +653,23 @@ def color(string, color=None):
     Change text color for the Linux terminal.
     """
 
-    attr = []
-    # bold
-    attr.append('1')
-
     if color:
         if color.lower() == "red":
-            attr.append('31')
+            return Fore.RED + string + Fore.RESET
         elif color.lower() == "green":
-            attr.append('32')
+            return Fore.GREEN + string + Fore.RESET
         elif color.lower() == "blue":
-            attr.append('34')
-        return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
+            return Fore.BLUE + string + Fore.RESET
+	else:
+	    return string
 
     else:
         if string.strip().startswith("[!]"):
-            attr.append('31')
-            return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
+            return Fore.RED + Style.BRIGHT + string + Fore.RESET
         elif string.strip().startswith("[+]"):
-            attr.append('32')
-            return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
+            return Fore.GREEN + Style.BRIGHT + string + Fore.RESET
         elif string.strip().startswith("[*]"):
-            attr.append('34')
-            return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
+            return Fore.BLUE + Style.BRIGHT + string + Fore.RESET
         else:
             return string
 
